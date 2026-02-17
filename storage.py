@@ -127,7 +127,5 @@ def get_salt(value:bytes):
 
 if __name__ == '__main__':
     new_root_user("test", "password")
-    print(login("test", "password"))
-    add_login_info("test", "password", "test123@gmail.com", "password", "https://test.url.com/login")
     add_login_info("test", "password", "test123@gmail.com", "password", "https://test.url.com/login")
     print(get_login_info("test", "password"))
