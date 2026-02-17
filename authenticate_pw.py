@@ -1,4 +1,5 @@
 import hashlib
+import random
 import os
 import json
 
@@ -12,10 +13,18 @@ def new_user(username, password):
     if username in users.keys():
         return
     else:
-        hashed_pw = salt_hash_auth_pw(password, os.urandom(32))
+        hashed_pw = salt_hash_auth_pw(password, random.randint(0, 10000).to_bytes(5, byteorder='little'))
         users[username] = hashed_pw.decode('latin-1')
         with open("storage/root_users.txt", "w", encoding='latin-1') as f:
             f.write(json.dumps(users))
+        new_user_file(username)
+
+def new_user_file(username):
+    path = "storage/"+username+".txt"
+    if os.path.exists(path):
+        os.remove(path)
+    with open(path, "x") as f:
+        f.write("")
 
 def login(username, password):
     with open("storage/root_users.txt", "r", encoding='latin-1') as f:
