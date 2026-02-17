@@ -55,11 +55,11 @@ def login(username, password):
         return check_password(password, value)
 
 
-def salt_hash_auth_pw(pw, salt, limit=2):
+def salt_hash_auth_pw(pw, salt, cycles=2):
     hashed_password = hashlib.pbkdf2_hmac('sha256', pw.encode('latin-1'), salt, 100000)
-    if limit == 0:
+    if cycles == 0:
         return salt+"$".encode('latin-1')+hashed_password
-    return salt_hash_auth_pw(str(hashed_password), salt, limit=limit-1)
+    return salt_hash_auth_pw(str(hashed_password), salt, cycles=cycles-1)
 
 def check_password(pw, value):
     verify_salt = ""
