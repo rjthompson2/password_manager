@@ -3,7 +3,22 @@ import random
 import os
 import json
 
-def new_user(username, password):
+def add_login_info(user, username, password, website):
+    filename = "storage/"+user+".txt"
+    if not os.path.exists(filename):
+        return
+    with open(filename, "r", encoding='latin-1') as f:
+        text = f.read()
+        if text == "":
+            return
+        data = json.loads(text)
+    if website in data.keys():
+        return
+    data[website] = {'username': username, 'password': password}
+    with open(filename, "w", encoding='latin-1') as f:
+        f.write(json.dumps(data))
+    
+def new_root_user(username, password):
     with open("storage/root_users.txt", "r", encoding='latin-1') as f:
         text = f.read()
         if text == "":
@@ -24,7 +39,7 @@ def new_user_file(username):
     if os.path.exists(path):
         os.remove(path)
     with open(path, "x") as f:
-        f.write("")
+        f.write("{}")
 
 def login(username, password):
     with open("storage/root_users.txt", "r", encoding='latin-1') as f:
@@ -56,5 +71,6 @@ def check_password(pw, value):
     return value == claimant_hash
 
 if __name__ == '__main__':
-    new_user("test", "password")
+    new_root_user("test", "password")
     print(login("test", "password"))
+    add_login_info("test", "test123@gmail.com", "password", "https://test.url.com/login")
