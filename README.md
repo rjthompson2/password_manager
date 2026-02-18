@@ -15,4 +15,5 @@ is it possible to automatically change passwords after a set time for every webs
 - should be okay because password changing on random intervals was created to protect people from forgetting passwords, but this manager should remember for user
 
 MFA/SSO for root users on login
+
 root user protections from brute force/guessing attacks
